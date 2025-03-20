@@ -1,3 +1,6 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database/db');
+
 const Volunteer = sequelize.define('Volunteer', {
     id: {
       type: DataTypes.INTEGER,
@@ -35,3 +38,5 @@ const Volunteer = sequelize.define('Volunteer', {
       allowNull: true
     }
   });
+
+module.exports = Volunteer;

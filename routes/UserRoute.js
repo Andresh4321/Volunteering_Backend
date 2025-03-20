@@ -1,15 +1,15 @@
+// routes/users.js
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
+const { signup, login } = require('../controllers/userController');
 const { authenticateToken } = require('../middleware/auth');
 
-// Register new user
-router.post('/signup', authController.signup);
-
-// Login user
-router.post('/login', authController.login);
+router.post('/signup', signup);
+router.post('/login', login);
 
 // Get user profile
-router.get('/profile', authenticateToken, authController.getProfile);
+router.get('/profile', authenticateToken, (req, res) => {
+  res.json({ user: req.user });
+});
 
 module.exports = router;

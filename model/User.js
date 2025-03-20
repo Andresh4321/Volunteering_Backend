@@ -1,17 +1,16 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../server');
-const bcrypt = require('bcrypt');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../database/db'); // Make sure the path to db is correct
 
+// Define the User model
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  username: {
+  name: {
     type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   email: {
     type: DataTypes.STRING,
@@ -24,24 +23,15 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
-  }
-}, {
-  hooks: {
-    beforeCreate: async (user) => {
-      if (user.password) {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(user.password, salt);
-      }
-    },
-    beforeUpdate: async (user) => {
-      if (user.changed('password')) {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(user.password, salt);
-      }
-    }
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  interest: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 });
 
-User.prototype.validPassword = async function(password) {
-  return await bcrypt.compare(password, this.password);
-};
+module.exports = User;

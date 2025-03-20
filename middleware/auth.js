@@ -1,4 +1,4 @@
-// File: middleware/auth.js
+// middleware/auth.js
 const jwt = require('jsonwebtoken');
 
 // Authentication middleware
